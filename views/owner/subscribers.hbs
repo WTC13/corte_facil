@@ -1,0 +1,41 @@
+{{> page-header title="Assinantes" subtitle="Quem tem plano, quanto já usou e quando renova"}}
+
+<section class="panel">
+  <div class="panel-head">
+    <div class="filters">
+      <button class="chip is-on" data-filter="all">Todos</button>
+      <button class="chip" data-filter="active">Ativos</button>
+      <button class="chip" data-filter="overdue">Em atraso</button>
+      <button class="chip" data-filter="canceled">Cancelados</button>
+    </div>
+    <div class="d-flex gap-2 flex-wrap">
+      <label class="search"><i class="bi bi-search"></i><input id="subSearch" type="search" class="form-control" placeholder="Buscar por nome" aria-label="Buscar assinante"></label>
+      <button class="btn btn-line js-export"><i class="bi bi-download"></i> Exportar</button>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table class="table-app" id="subTable">
+      <thead><tr><th>Cliente</th><th>Plano</th><th>Créditos usados</th><th>Próxima cobrança</th><th>Último corte</th><th>Status</th></tr></thead>
+      <tbody>
+        {{#each subscribers}}
+          <tr data-name="{{this.name}}" data-status="{{this.status}}">
+            <td>
+              <div class="who">
+                <span class="avatar" style="background:hsl({{hue this.name}} 35% 42%)">{{initials this.name}}</span>
+                <div><strong>{{this.name}}</strong><small>{{this.phone}}</small></div>
+              </div>
+            </td>
+            <td>{{this.plan}} <span class="tag-type {{this.type}}">{{typeLabel this.type}}</span></td>
+            <td style="min-width:150px">
+              <div class="meter">{{#each (slots this.used this.total)}}<i class="{{#if this}}on{{/if}}"></i>{{/each}}</div>
+              <div class="meter-label">{{this.used}} de {{this.total}}</div>
+            </td>
+            <td>{{formatData this.next_charge}}</td>
+            <td>{{formatData this.last_visit}}</td>
+            <td><span class="badge-s {{statusTone this.status}}">{{statusLabel this.status}}</span></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>

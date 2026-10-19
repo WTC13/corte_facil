@@ -1,0 +1,32 @@
+{{> page-header title="Meus números" subtitle="Quanto você usa, quanto economiza e com quem corta"}}
+
+{{> stats-row}}
+
+<div class="row g-3">
+  <div class="col-12 col-xl-6">
+    <section class="panel h-100">
+      <div class="panel-head"><h2>Cortes por mês</h2></div>
+      <div class="panel-body"><div class="chart-box"><canvas data-config="{{json cutsChart}}" aria-label="Cortes por mês"></canvas></div></div>
+    </section>
+  </div>
+  <div class="col-12 col-xl-6">
+    <section class="panel h-100">
+      <div class="panel-head"><h2>Últimas visitas</h2></div>
+      <div class="table-wrap">
+        <table class="table-app">
+          <thead><tr><th>Data</th><th>Serviço</th><th>Barbeiro</th><th>Status</th></tr></thead>
+          <tbody>
+            {{#each history}}
+              <tr>
+                <td>{{formatData this.date}}</td>
+                <td>{{this.service}}</td>
+                <td>{{this.barber}}</td>
+                <td><span class="badge-s {{statusTone this.status}}">{{statusLabel this.status}}</span></td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>

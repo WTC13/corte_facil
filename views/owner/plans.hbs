@@ -1,0 +1,39 @@
+{{> page-header title="Planos" subtitle="O que sua barbearia vende: clube mensal e cortes avulsos" actionLabel="Novo plano" actionIcon="bi-plus-lg" actionClass="js-new-plan"}}
+
+<h2 class="section-title mt-0">Clube mensal <span class="tag-type monthly">Recorrente</span></h2>
+<div class="plan-grid">
+  {{#each monthly}}
+    <article class="plan">
+      <h3>{{this.name}}</h3>
+      <div class="price">{{formatMoney this.price}} <small>/ mês</small></div>
+      <p>{{this.description}}</p>
+      <ul>
+        <li><i class="bi bi-check2"></i>{{this.cuts}} cortes por mês</li>
+        <li><i class="bi bi-check2"></i>Renovação automática</li>
+      </ul>
+      <div class="plan-foot">
+        <span class="text-muted">{{this.subscribers}} assinantes</span>
+        <button class="btn btn-line btn-sm">Editar</button>
+      </div>
+    </article>
+  {{/each}}
+</div>
+
+<h2 class="section-title">Avulso <span class="tag-type">Pagamento único</span></h2>
+<div class="plan-grid">
+  {{#each single}}
+    <article class="plan">
+      <h3>{{this.name}}</h3>
+      <div class="price">{{formatMoney this.price}}</div>
+      <p>{{this.description}}</p>
+      <ul>
+        <li><i class="bi bi-check2"></i>{{this.cuts}} {{#if (eq this.cuts 1)}}corte{{else}}cortes{{/if}}</li>
+        <li><i class="bi bi-check2"></i>Válido por {{this.validity_days}} dias</li>
+      </ul>
+      <div class="plan-foot">
+        <span class="text-muted">{{this.subscribers}} clientes</span>
+        <button class="btn btn-line btn-sm">Editar</button>
+      </div>
+    </article>
+  {{/each}}
+</div>

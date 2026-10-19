@@ -1,0 +1,13 @@
+<section class="stats" aria-label="Indicadores">
+  {{#each stats}}
+    <div class="stat">
+      <span class="stat-label">{{this.label}}</span>
+      <span class="stat-value">{{this.value}}</span>
+      <span class="stat-delta tone-{{this.tone}}">
+        {{#if (eq this.tone 'up')}}<i class="bi bi-arrow-up-right"></i>{{/if}}
+        {{#if (eq this.tone 'down')}}<i class="bi bi-arrow-down-right"></i>{{/if}}
+        {{this.delta}}
+      </span>
+    </div>
+  {{/each}}
+</section>

@@ -1,0 +1,69 @@
+{{> page-header title="Visão geral" subtitle=dateLabel actionLabel="Novo agendamento" actionIcon="bi-plus-lg" actionClass="js-new-appointment"}}
+
+{{> stats-row}}
+
+<div class="row g-3">
+  <div class="col-12 col-xl-8">
+    <section class="panel h-100">
+      <div class="panel-head">
+        <h2>Receita por mês</h2>
+        <small>Mensal x avulso</small>
+      </div>
+      <div class="panel-body">
+        <div class="chart-box"><canvas data-config="{{json revenueChart}}" aria-label="Receita por mês"></canvas></div>
+      </div>
+    </section>
+  </div>
+  <div class="col-12 col-xl-4">
+    <section class="panel h-100">
+      <div class="panel-head"><h2>Assinantes por plano</h2></div>
+      <div class="panel-body">
+        <div class="chart-box"><canvas data-config="{{json mixChart}}" aria-label="Assinantes por plano"></canvas></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="col-12 col-xl-7">
+    <section class="panel h-100">
+      <div class="panel-head">
+        <h2>Atendimentos de hoje</h2>
+        <a href="{{prefix}}/owner/agenda" class="btn btn-line btn-sm">Abrir agenda</a>
+      </div>
+      <div class="table-wrap">
+        <table class="table-app">
+          <thead><tr><th>Hora</th><th>Cliente</th><th>Serviço</th><th>Barbeiro</th><th>Status</th></tr></thead>
+          <tbody>
+            {{#each today}}
+              <tr>
+                <td><strong>{{this.time}}</strong></td>
+                <td>{{this.client}}</td>
+                <td>{{this.service}}</td>
+                <td>{{this.barber}}</td>
+                <td><span class="badge-s {{statusTone this.status}}">{{statusLabel this.status}}</span></td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <div class="col-12 col-xl-5">
+    <section class="panel h-100">
+      <div class="panel-head"><h2>Pagamentos em atraso</h2><small>{{overdue.length}} assinante(s)</small></div>
+      <div class="panel-body d-grid gap-3">
+        {{#each overdue}}
+          <div class="d-flex align-items-center justify-content-between gap-2">
+            <div class="who">
+              <span class="avatar" style="background:hsl({{hue this.name}} 35% 42%)">{{initials this.name}}</span>
+              <div><strong>{{this.name}}</strong><small>{{this.plan}} · venceu {{formatData this.next_charge}}</small></div>
+            </div>
+            <button class="btn btn-line btn-sm js-remind" data-name="{{this.name}}"><i class="bi bi-whatsapp"></i> Lembrar</button>
+          </div>
+        {{else}}
+          <p class="text-muted mb-0">Nenhum pagamento em atraso. Tudo em dia.</p>
+        {{/each}}
+      </div>
+    </section>
+  </div>
+</div>

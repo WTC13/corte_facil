@@ -1,0 +1,47 @@
+{{> page-header title="Agenda" subtitle="Domingo, 18 de outubro" actionLabel="Novo agendamento" actionIcon="bi-plus-lg" actionClass="js-new-appointment"}}
+
+<div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mb-3">
+  <div class="week" role="group" aria-label="Dias da semana">
+    {{#each week}}
+      <button type="button" class="{{#if this.active}}is-on{{/if}}"><small>{{this.label}}</small><strong>{{this.day}}</strong></button>
+    {{/each}}
+  </div>
+  <div style="min-width:200px">
+    <select data-choices aria-label="Filtrar barbeiro">
+      <option value="">Todos os barbeiros</option>
+      {{#each barbers}}<option value="{{this.id}}">{{this.name}}</option>{{/each}}
+    </select>
+  </div>
+</div>
+
+<section class="panel">
+  <div class="table-wrap">
+    <div class="agenda" style="--cols:{{barbers.length}}">
+      <div class="agenda-head">
+        <div></div>
+        {{#each barbers}}
+          <div class="who"><span class="avatar" style="background:hsl({{hue this.name}} 35% 42%)">{{initials this.name}}</span>{{this.name}}</div>
+        {{/each}}
+      </div>
+      {{#each rows}}
+        <div class="agenda-row {{#if this.lunch}}is-lunch{{/if}}">
+          <div class="hour">{{this.hour}}</div>
+          {{#each this.cells}}
+            <div>
+              {{#if this}}
+                <div class="appt {{this.status}}">
+                  <strong>{{this.client}}</strong>
+                  {{this.service}}
+                </div>
+              {{else}}
+                {{#unless ../lunch}}
+                  <button type="button" class="free js-new-appointment" data-time="{{../hour}}"><i class="bi bi-plus"></i> Livre</button>
+                {{/unless}}
+              {{/if}}
+            </div>
+          {{/each}}
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</section>

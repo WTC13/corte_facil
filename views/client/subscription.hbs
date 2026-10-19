@@ -1,0 +1,70 @@
+{{> page-header title="Minha assinatura" subtitle="Seu plano, pagamentos e opções para trocar"}}
+
+<div class="row g-3">
+  <div class="col-12 col-xl-5">
+    <section class="panel h-100">
+      <div class="panel-head">
+        <h2>{{current.name}}</h2>
+        <span class="badge-s {{statusTone current.status}}">{{statusLabel current.status}}</span>
+      </div>
+      <div class="panel-body">
+        <div class="price mb-3" style="font-family:var(--font-display);font-weight:800;font-size:2rem">
+          {{formatMoney current.price}} <small class="text-muted" style="font-family:var(--font-body);font-size:.9rem;font-weight:400">/ mês</small>
+        </div>
+        <div class="meter">{{#each (slots current.used current.total)}}<i class="{{#if this}}on{{/if}}"></i>{{/each}}</div>
+        <div class="meter-label mb-3">{{current.used}} de {{current.total}} cortes usados neste ciclo</div>
+        <dl class="summary mb-3">
+          <dt>Próxima cobrança</dt><dd>{{formatData current.renews}}</dd>
+          <dt>Forma de pagamento</dt><dd>{{current.method}}</dd>
+        </dl>
+        <div class="d-flex gap-2 flex-wrap">
+          <button class="btn btn-line js-change-card"><i class="bi bi-credit-card"></i> Trocar pagamento</button>
+          <button class="btn btn-line text-danger js-cancel-sub">Cancelar assinatura</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="col-12 col-xl-7">
+    <section class="panel h-100">
+      <div class="panel-head"><h2>Pagamentos</h2></div>
+      <div class="table-wrap">
+        <table class="table-app">
+          <thead><tr><th>Data</th><th>Descrição</th><th>Forma</th><th>Valor</th><th>Status</th></tr></thead>
+          <tbody>
+            {{#each invoices}}
+              <tr>
+                <td>{{formatData this.date}}</td>
+                <td>{{this.description}}</td>
+                <td>{{this.method}}</td>
+                <td>{{formatMoney this.amount}}</td>
+                <td><span class="badge-s {{statusTone this.status}}">{{statusLabel this.status}}</span></td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+
+<h2 class="section-title">Outros planos</h2>
+<div class="plan-grid">
+  {{#each plans}}
+    <article class="plan {{#if (eq this.name ../current.name)}}is-current{{/if}}">
+      <div class="d-flex justify-content-between align-items-start">
+        <h3>{{this.name}}</h3>
+        <span class="tag-type {{this.type}}">{{typeLabel this.type}}</span>
+      </div>
+      <div class="price">{{formatMoney this.price}}{{#if (eq this.type 'monthly')}} <small>/ mês</small>{{/if}}</div>
+      <p>{{this.description}}</p>
+      <div class="plan-foot">
+        {{#if (eq this.name ../current.name)}}
+          <span class="badge-s ok">Seu plano atual</span>
+        {{else}}
+          <button class="btn btn-ink btn-sm js-pay" data-plan="{{this.name}}" data-price="{{this.price}}">{{#if (eq this.type 'monthly')}}Assinar{{else}}Comprar{{/if}}</button>
+        {{/if}}
+      </div>
+    </article>
+  {{/each}}
+</div>

@@ -1,0 +1,9 @@
+<div class="page-head">
+  <div>
+    <h1>{{title}}</h1>
+    {{#if subtitle}}<p>{{subtitle}}</p>{{/if}}
+  </div>
+  {{#if actionLabel}}
+    <button type="button" class="btn btn-pole {{actionClass}}"><i class="bi {{actionIcon}}"></i> {{actionLabel}}</button>
+  {{/if}}
+</div>

@@ -1,0 +1,33 @@
+<div class="auth">
+  <section class="auth-side">
+    <div class="brand">
+      <span class="brand-mark"><i class="bi bi-scissors"></i></span>
+      <div><strong>{{appName}}</strong><small>Agenda e assinaturas para barbearias</small></div>
+    </div>
+    <div>
+      <h2>Cadeira cheia, caixa previsível.</h2>
+      <p>Agende cortes, venda planos mensais e acompanhe a receita da barbearia em um só lugar.</p>
+    </div>
+    <span class="pole" style="height:6px;border-radius:3px" aria-hidden="true"></span>
+  </section>
+
+  <section class="auth-form">
+    <div class="auth-card">
+      <h1>Entrar</h1>
+      <p class="text-muted mb-4">Acesse sua conta para ver agenda, plano e relatórios.</p>
+      <form action="{{prefix}}/owner/dashboard" method="get" class="d-grid gap-3">
+        <div>
+          <label class="form-label" for="email">E-mail</label>
+          <input id="email" type="email" class="form-control" placeholder="voce@email.com" required autocomplete="email">
+        </div>
+        <div>
+          <label class="form-label" for="password">Senha</label>
+          <input id="password" type="password" class="form-control" required autocomplete="current-password">
+        </div>
+        <button class="btn btn-ink btn-lg" type="submit">Entrar</button>
+        <a class="btn btn-line" href="{{prefix}}/client/book">Entrar como assinante (preview)</a>
+      </form>
+      <p class="mt-4 mb-0 text-muted">Ainda não tem conta? <a href="{{prefix}}/register">Criar conta</a></p>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,41 @@
+<div class="auth">
+  <section class="auth-side">
+    <div class="brand">
+      <span class="brand-mark"><i class="bi bi-scissors"></i></span>
+      <div><strong>{{appName}}</strong><small>{{enterprise.name}}</small></div>
+    </div>
+    <div>
+      <h2>Seu corte marcado em dois toques.</h2>
+      <p>Crie sua conta para agendar, usar os créditos do seu plano e acompanhar suas visitas.</p>
+    </div>
+    <span class="pole" style="height:6px;border-radius:3px" aria-hidden="true"></span>
+  </section>
+
+  <section class="auth-form">
+    <div class="auth-card">
+      <h1>Criar conta</h1>
+      <p class="text-muted mb-4">Cadastro na <strong>{{enterprise.name}}</strong>.</p>
+      <form action="{{prefix}}/client/book" method="get" class="d-grid gap-3">
+        <input type="hidden" name="enterprise_slug" value="{{enterprise.slug}}">
+        <div>
+          <label class="form-label" for="name">Nome completo</label>
+          <input id="name" name="name" class="form-control" required autocomplete="name">
+        </div>
+        <div>
+          <label class="form-label" for="email">E-mail</label>
+          <input id="email" name="email" type="email" class="form-control" required autocomplete="email">
+        </div>
+        <div>
+          <label class="form-label" for="phone_number">WhatsApp</label>
+          <input id="phone_number" name="phone_number" type="tel" class="form-control" placeholder="(11) 90000-0000" required autocomplete="tel">
+        </div>
+        <div>
+          <label class="form-label" for="password">Senha</label>
+          <input id="password" name="password" type="password" class="form-control" minlength="6" required autocomplete="new-password">
+        </div>
+        <button class="btn btn-ink btn-lg" type="submit">Criar conta</button>
+      </form>
+      <p class="mt-4 mb-0 text-muted">Já tem conta? <a href="{{prefix}}/login">Entrar</a></p>
+    </div>
+  </section>
+</div>

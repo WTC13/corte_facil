@@ -1,0 +1,53 @@
+{{> page-header title="Relatórios" subtitle="Receita, assinantes e desempenho da equipe" actionLabel="Exportar CSV" actionIcon="bi-download" actionClass="js-export"}}
+
+<div class="d-flex gap-2 mb-3 flex-wrap">
+  <div class="filters">
+    <button class="chip" data-period="7">7 dias</button>
+    <button class="chip is-on" data-period="30">30 dias</button>
+    <button class="chip" data-period="90">90 dias</button>
+    <button class="chip" data-period="365">12 meses</button>
+  </div>
+</div>
+
+{{> stats-row}}
+
+<div class="row g-3">
+  <div class="col-12 col-xl-7">
+    <section class="panel h-100">
+      <div class="panel-head"><h2>Receita mensal</h2></div>
+      <div class="panel-body"><div class="chart-box"><canvas data-config="{{json revenueChart}}" aria-label="Receita mensal"></canvas></div></div>
+    </section>
+  </div>
+  <div class="col-12 col-md-6 col-xl-5">
+    <section class="panel h-100">
+      <div class="panel-head"><h2>Receita: mensal x avulso</h2></div>
+      <div class="panel-body"><div class="chart-box"><canvas data-config="{{json typeChart}}" aria-label="Receita por tipo de assinante"></canvas></div></div>
+    </section>
+  </div>
+  <div class="col-12 col-md-6 col-xl-5">
+    <section class="panel h-100">
+      <div class="panel-head"><h2>Cortes por barbeiro</h2></div>
+      <div class="panel-body"><div class="chart-box sm"><canvas data-config="{{json barberChart}}" aria-label="Cortes por barbeiro"></canvas></div></div>
+    </section>
+  </div>
+  <div class="col-12 col-xl-7">
+    <section class="panel h-100">
+      <div class="panel-head"><h2>Assinantes em risco</h2><small>Em atraso ou sem usar créditos</small></div>
+      <div class="table-wrap">
+        <table class="table-app">
+          <thead><tr><th>Cliente</th><th>Plano</th><th>Último corte</th><th>Motivo</th></tr></thead>
+          <tbody>
+            {{#each atRisk}}
+              <tr>
+                <td><div class="who"><span class="avatar" style="background:hsl({{hue this.name}} 35% 42%)">{{initials this.name}}</span><strong>{{this.name}}</strong></div></td>
+                <td>{{this.plan}}</td>
+                <td>{{formatData this.last_visit}}</td>
+                <td>{{#if (eq this.status 'overdue')}}<span class="badge-s bad">Pagamento em atraso</span>{{else}}<span class="badge-s warn">Não usou créditos</span>{{/if}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>

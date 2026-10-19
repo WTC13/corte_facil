@@ -1,0 +1,92 @@
+{{> page-header title="Agendar corte" subtitle="Escolha serviço, barbeiro e horário"}}
+
+<div class="row g-3" id="bookFlow">
+  <div class="col-12 col-xl-8">
+    <ol class="steps p-0" aria-label="Etapas do agendamento">
+      <li>Serviço</li><li>Barbeiro</li><li>Horário</li><li>Confirmar</li>
+    </ol>
+
+    <section class="panel">
+      <div class="panel-body">
+
+        <div class="step-panel" data-step="1">
+          <h2 class="h5 mb-3">O que vamos fazer?</h2>
+          <div class="choices-list">
+            {{#each services}}
+              <div class="choice">
+                <input type="radio" name="service" id="svc{{this.id}}" data-label="{{this.name}}">
+                <label for="svc{{this.id}}">
+                  <strong>{{this.name}}</strong>
+                  <small>{{this.minutes}} min</small>
+                  <span class="credit"><i class="bi bi-ticket-perforated"></i> Usa 1 crédito do plano</span>
+                </label>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+
+        <div class="step-panel" data-step="2">
+          <h2 class="h5 mb-3">Com quem?</h2>
+          <div class="choices-list">
+            <div class="choice">
+              <input type="radio" name="barber" id="brb0" data-label="Sem preferência">
+              <label for="brb0"><strong>Sem preferência</strong><small>O primeiro horário livre</small></label>
+            </div>
+            {{#each barbers}}
+              <div class="choice">
+                <input type="radio" name="barber" id="brb{{this.id}}" data-label="{{this.name}}">
+                <label for="brb{{this.id}}">
+                  <div class="who"><span class="avatar" style="background:hsl({{hue this.name}} 35% 42%)">{{initials this.name}}</span><strong>{{this.name}}</strong></div>
+                </label>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+
+        <div class="step-panel" data-step="3">
+          <h2 class="h5 mb-3">Quando?</h2>
+          <div class="week" role="group" aria-label="Dias disponíveis">
+            {{#each days}}
+              <button type="button" class="js-day {{#if this.active}}is-on{{/if}}" data-key="{{this.key}}" data-label="{{this.label}}">{{this.label}}</button>
+            {{/each}}
+          </div>
+          {{#each days}}
+            <div class="slots day-slots {{#unless this.active}}d-none{{/unless}}" data-day="{{this.key}}">
+              {{#each this.slots}}
+                <button type="button" class="slot-btn" {{#unless this.free}}disabled{{/unless}}>{{this.time}}</button>
+              {{/each}}
+            </div>
+          {{/each}}
+        </div>
+
+        <div class="step-panel" data-step="4">
+          <h2 class="h5 mb-3">Confira e confirme</h2>
+          <dl class="summary mb-0">
+            <dt>Serviço</dt><dd id="sumService">—</dd>
+            <dt>Barbeiro</dt><dd id="sumBarber">—</dd>
+            <dt>Dia e horário</dt><dd id="sumWhen">—</dd>
+            <dt>Cobrança</dt><dd>1 crédito do plano {{credits.plan}} (sem custo extra)</dd>
+          </dl>
+        </div>
+
+        <div class="step-actions">
+          <button type="button" class="btn btn-line" id="btnPrev">Voltar</button>
+          <span></span>
+          <button type="button" class="btn btn-ink" id="btnNext">Continuar</button>
+          <button type="button" class="btn btn-pole" id="btnConfirm">Confirmar agendamento</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="col-12 col-xl-4">
+    <section class="panel">
+      <div class="panel-head"><h2>Seus créditos</h2><span class="tag-type monthly">{{credits.plan}}</span></div>
+      <div class="panel-body">
+        <div class="meter">{{#each (slots credits.used credits.total)}}<i class="{{#if this}}on{{/if}}"></i>{{/each}}</div>
+        <div class="meter-label">{{credits.used}} de {{credits.total}} cortes usados</div>
+        <p class="mt-3 mb-0 text-muted">Renova em {{formatData credits.renews}}. Créditos não usados não acumulam.</p>
+      </div>
+    </section>
+  </div>
+</div>
