@@ -15,11 +15,11 @@
 <body>
 <div class="shell">
 
-  <aside class="sidebar offcanvas-lg offcanvas-start" tabindex="-1" id="sidebar" aria-label="Menu principal">
+  <aside class="sidebar" id="sidebar" aria-label="Menu principal">
     <div class="sidebar-inner">
       <div class="brand">
         <span class="brand-mark"><i class="bi bi-scissors"></i></span>
-        <div>
+        <div class="side-text">
           <strong>{{appName}}</strong>
           <small>{{enterprise.name}}</small>
         </div>
@@ -27,8 +27,8 @@
 
       <nav class="side-nav">
         {{#each nav}}
-          <a href="{{../prefix}}{{this.href}}" class="side-link {{#if (eq ../active this.key)}}is-active{{/if}}">
-            <i class="bi {{this.icon}}"></i><span>{{this.label}}</span>
+          <a href="{{../prefix}}{{this.href}}" title="{{this.label}}" class="side-link {{#if (eq ../active this.key)}}is-active{{/if}}">
+            <i class="bi {{this.icon}}"></i><span class="side-text">{{this.label}}</span>
           </a>
         {{/each}}
       </nav>
@@ -36,30 +36,24 @@
       <div class="side-foot">
         <div class="user-chip">
           <span class="avatar" style="background:hsl({{hue user.name}} 35% 42%)">{{initials user.name}}</span>
-          <div>
+          <div class="side-text">
             <strong>{{user.name}}</strong>
             <small>{{user.role}}</small>
           </div>
         </div>
         {{!-- Atalho só do preview: alternar entre as duas visões --}}
         {{#if (eq area 'owner')}}
-          <a class="side-mini" href="{{prefix}}/client/book"><i class="bi bi-arrow-left-right"></i> Ver como assinante</a>
+          <a class="side-mini" title="Ver como assinante" href="{{prefix}}/client/book"><i class="bi bi-arrow-left-right"></i><span class="side-text"> Ver como assinante</span></a>
         {{else}}
-          <a class="side-mini" href="{{prefix}}/owner/dashboard"><i class="bi bi-arrow-left-right"></i> Ver como dono</a>
+          <a class="side-mini" title="Ver como dono" href="{{prefix}}/owner/dashboard"><i class="bi bi-arrow-left-right"></i><span class="side-text"> Ver como dono</span></a>
         {{/if}}
-        <a class="side-mini" href="{{prefix}}/login"><i class="bi bi-box-arrow-left"></i> Sair</a>
+        <a class="side-mini" title="Sair" href="{{prefix}}/login"><i class="bi bi-box-arrow-left"></i><span class="side-text"> Sair</span></a>
       </div>
     </div>
     <span class="pole pole-edge" aria-hidden="true"></span>
   </aside>
 
   <div class="main">
-    <header class="topbar d-lg-none">
-      <button class="btn btn-ink btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
-        <i class="bi bi-list"></i> Menu
-      </button>
-      <strong>{{appName}}</strong>
-    </header>
     <main class="content">
       {{{body}}}
     </main>
